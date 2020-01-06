@@ -1,11 +1,25 @@
 defmodule BrickTest do
   use ExUnit.Case
-  doctest Tetris
   import Tetris.Brick
+
+  @shapes Application.get_env(:tetris, :shapes)
 
   test "new brick" do
     brick = new()
     assert brick == %Tetris.Brick{name: :i, location: {40, 0}, rotation: 0, reflection: false}
+  end
+
+  test "new brick from attributes" do
+    assert from([name: :l]).name == :l
+    assert from([name: :z]).name == :z
+    assert from([rotation: 90]).rotation == 90
+  end
+
+  test "get brick shape" do
+    [:i, :o, :l, :z, :t]
+    |> Enum.each(fn name -> 
+      assert (from([name: name]) |> shape) == @shapes[name]
+    end)
   end
 
   test "brick up movement" do
@@ -46,4 +60,5 @@ defmodule BrickTest do
     assert (new() |> rotate(3)).rotation == 270
     assert (new() |> rotate(4)).rotation == 0
   end
+
 end

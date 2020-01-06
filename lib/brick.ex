@@ -1,11 +1,16 @@
 defmodule Tetris.Brick do
-  @type point :: {number, number}
+  @type point :: {integer, integer}
+  @type name :: :i | :o | :l | :z | :t
+  @type degrees :: 0 | 90 | 180 | 270
   @type t :: %__MODULE__{
-          name: :i | :o | :l | :z,
+          name: name,
           location: point,
-          rotation: 0 | 90 | 180 | 270,
+          rotation: degrees,
           reflection: boolean
         }
+
+  @shapes Application.get_env(:tetris, :shapes)
+
   defstruct name: :i,
             location: {40, 0},
             rotation: 0,
@@ -26,11 +31,24 @@ defmodule Tetris.Brick do
     }
   end
 
+  @spec from(keyword) :: t
+
+  def from(opts \\ [])
+
+  def from([]), do: new()
+
+  def from(opts), do: __struct__(opts)
+
+  @spec shape(t) :: [point]
+
+  def shape(%__MODULE__{name: name}), do: @shapes[name]
+
   defmodule Movements do
     def down({x, y}, step), do: {x, y - step}
     def up({x, y}, step), do: {x, y + step}
     def left({x, y}, step), do: {x - step, y}
     def right({x, y}, step), do: {x + step, y}
+
     def rotate(degrees, step) do
       case degrees + 90 * step do
         360 -> 0
