@@ -7,6 +7,9 @@ defmodule Tetris.Shape do
 
   @spec translate(t, point) :: t
 
+  @doc """ 
+    Ads {dx, dy} to every point {x, y} in the shape
+  """
   def translate(points, adjustment \\ {0, 0})
 
   def translate(points, {0, 0}), do: points
@@ -19,6 +22,9 @@ defmodule Tetris.Shape do
 
   @spec rotate(t, degrees) :: t
 
+  @doc """ 
+    rotate 90 degrees as per adjustment
+  """
   def rotate(shape, 0), do: shape
 
   def rotate(shape, adjustment) do
@@ -29,10 +35,13 @@ defmodule Tetris.Shape do
 
   @spec rotate_90(t) :: t
 
-  defp rotate_90(shape) do
+  @doc """
+    transpose |> mirror 
+  """
+  def rotate_90(shape) do
     shape
-    |> transpose()
-    |> mirror()
+    |> transpose
+    |> mirror
   end
 
   @spec transpose(t) :: t
@@ -42,7 +51,7 @@ defmodule Tetris.Shape do
       +     --->  + + +
       + +         +   
   """
-  defp transpose(shape) do
+  def transpose(shape) do
     shape |> Enum.map(fn {x, y} -> {y, x} end)
   end
 
@@ -53,8 +62,8 @@ defmodule Tetris.Shape do
   """
   @spec mirror(t) :: t
 
-  defp mirror(shape) do
-    shape |> Enum.map(fn {x, y} -> {4 - x, y} end)
+  def mirror(shape) do
+    shape |> Enum.map(fn {x, y} -> {5 - x, y} end)
   end
 
   @spec flip(t) :: t
@@ -64,7 +73,7 @@ defmodule Tetris.Shape do
       +     --->  +
       + +         +
   """
-  defp flip(shape) do
-    shape |> Enum.map(fn {x, y} -> {x, 4 - y} end)
+  def flip(shape) do
+    shape |> Enum.map(fn {x, y} -> {x, 5 - y} end)
   end
 end
