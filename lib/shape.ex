@@ -108,4 +108,5 @@ defmodule Tetris.Shape do
 
     shape
   end
+
 end

@@ -26,7 +26,7 @@ defmodule Tetris.Brick do
 
   def new(:random) do
     %__MODULE__{
-      name: ~w(i o l z)a |> Enum.random(),
+      name: ~w(i o l z t)a |> Enum.random(),
       location: {40, 0},
       rotation: [0, 90, 180, 270] |> Enum.random(),
       reflection: [true, false] |> Enum.random()
@@ -89,6 +89,13 @@ defmodule Tetris.Brick do
     def unquote(name)(%__MODULE__{unquote(field) => value} = brick, step \\ 1) do
       %{brick | unquote(field) => unquote(Macro.escape(operation)).(value, step)}
     end
+  end
+
+  @spec color(t) :: any
+
+  for {name, col} <- Enum.zip(~w(i o l z t)a, ~w(blue green orange red yellow)a) do
+
+    def color(%__MODULE__{name: unquote(name)}), do: unquote(col)
   end
 
   defp prepare(brick) do
