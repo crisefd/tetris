@@ -66,6 +66,12 @@ defmodule Tetris.Shape do
     shape |> Enum.map(fn {x, y} -> {5 - x, y} end)
   end
 
+  @spec mirror(t, boolean) :: t
+
+  def mirror(shape, false), do: shape
+
+  def mirror(shape, true), do: mirror(shape)
+
   @spec flip(t) :: t
 
   @doc """

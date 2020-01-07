@@ -49,7 +49,7 @@ defmodule Tetris.Brick do
 
   def to_string(brick) do
     brick
-    |> shape
+    |> prepare
     |> Shape.to_string()
   end
 
@@ -57,7 +57,7 @@ defmodule Tetris.Brick do
 
   def print(brick) do
     brick
-    |> shape
+    |> prepare
     |> Shape.print()
 
     brick
@@ -88,6 +88,30 @@ defmodule Tetris.Brick do
 
     def unquote(name)(%__MODULE__{unquote(field) => value} = brick, step \\ 1) do
       %{brick | unquote(field) => unquote(Macro.escape(operation)).(value, step)}
+    end
+  end
+
+  defp prepare(brick) do
+    brick
+    |> shape
+    |> Shape.rotate(brick.rotation)
+    |> Shape.mirror(brick.reflection)
+  end
+
+  defimpl Inspect, for: Tetris.Brick do
+    import Inspect.Algebra
+
+    def inspect(brick, _opts) do
+      concat([
+        Tetris.Brick.to_string(brick),
+        "\n",
+        "location: ",
+        inspect(brick.location),
+        " refection: ",
+        inspect(brick.reflection),
+        " rotation: ",
+        inspect(brick.rotation)
+      ])
     end
   end
 end
