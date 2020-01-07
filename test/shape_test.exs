@@ -1,6 +1,6 @@
-defmodule PointsTest do
+defmodule ShapeTest do
   use ExUnit.Case
-  import Tetris.Points
+  import Tetris.Shape
   alias Tetris.Brick
 
   @shapes Application.get_env(:tetris, :shapes)
