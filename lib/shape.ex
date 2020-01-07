@@ -7,7 +7,7 @@ defmodule Tetris.Shape do
 
   @spec translate(t, point) :: t
 
-  @doc """ 
+  @doc """
     Ads {dx, dy} to every point {x, y} in the shape
   """
   def translate(points, adjustment \\ {0, 0})
@@ -22,7 +22,7 @@ defmodule Tetris.Shape do
 
   @spec rotate(t, degrees) :: t
 
-  @doc """ 
+  @doc """
     rotate 90 degrees as per adjustment
   """
   def rotate(shape, 0), do: shape
@@ -75,5 +75,31 @@ defmodule Tetris.Shape do
   """
   def flip(shape) do
     shape |> Enum.map(fn {x, y} -> {x, 5 - y} end)
+  end
+
+  @spec to_string(t) :: binary
+
+  def to_string(shape) do
+    map =
+      shape
+      |> Enum.map(fn key -> {key, "🔲"} end)
+      |> Map.new()
+
+    for y <- 1..4, x <- 1..4 do
+      Map.get(map, {x, y}, "⬛️")
+    end
+    |> Enum.chunk_every(4)
+    |> Enum.map(&Enum.join/1)
+    |> Enum.join("\n")
+  end
+
+  @spec print(t) :: t
+
+  def print(shape) do
+    shape
+    |> __MODULE__.to_string()
+    |> IO.puts()
+
+    shape
   end
 end

@@ -36,12 +36,12 @@ defmodule ShapeTest do
       |> rotate_90
       |> assert_point({1, 4})
       |> rotate_90
-      |> assert_point([{1, 1}])
+      |> assert_point({1, 1})
   end
 
 
   defp assert_point([actual], expected) do
-    assert actual = expected
+    assert actual == expected
     [actual]
   end
   

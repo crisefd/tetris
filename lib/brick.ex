@@ -1,4 +1,6 @@
 defmodule Tetris.Brick do
+  alias Tetris.Shape
+
   @type point :: {integer, integer}
   @type name :: :i | :o | :l | :z | :t
   @type degrees :: 0 | 90 | 180 | 270
@@ -42,6 +44,24 @@ defmodule Tetris.Brick do
   @spec shape(t) :: [point]
 
   def shape(%__MODULE__{name: name}), do: @shapes[name]
+
+  @spec to_string(t) :: binary
+
+  def to_string(brick) do
+    brick
+    |> shape
+    |> Shape.to_string()
+  end
+
+  @spec print(t) :: t
+
+  def print(brick) do
+    brick
+    |> shape
+    |> Shape.print()
+
+    brick
+  end
 
   defmodule Movements do
     def down({x, y}, step), do: {x, y - step}
