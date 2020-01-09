@@ -19,6 +19,10 @@ defmodule Tetris.Brick do
     t: [{2, 1}, {2, 2}, {3, 2}, {2, 3}]
   ]
 
+  @names ~w(i o l z t)a
+
+  @colors ~w(blue green orange red yellow)a
+
   defstruct name: :i,
             location: {40, 0},
             rotation: 0,
@@ -32,7 +36,7 @@ defmodule Tetris.Brick do
 
   def new(:random) do
     %__MODULE__{
-      name: ~w(i o l z t)a |> Enum.random(),
+      name: @names |> Enum.random(),
       location: {40, 0},
       rotation: [0, 90, 180, 270] |> Enum.random(),
       reflection: [true, false] |> Enum.random()
@@ -51,7 +55,11 @@ defmodule Tetris.Brick do
 
   def shape(%__MODULE__{name: name}), do: @shapes[name]
 
-  def all_shapes(), do: @shapes
+  def all_shapes, do: @shapes
+
+  def all_names, do: @names
+
+  def all_colors, do: @colors
 
   @spec to_string(t) :: binary
 
@@ -101,7 +109,7 @@ defmodule Tetris.Brick do
 
   @spec color(t) :: any
 
-  for {name, col} <- Enum.zip(~w(i o l z t)a, ~w(blue green orange red yellow)a) do
+  for {name, col} <- Enum.zip(@names, @colors) do
 
     def color(%__MODULE__{name: unquote(name)}), do: unquote(col)
   end
