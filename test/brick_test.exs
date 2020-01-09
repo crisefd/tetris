@@ -2,8 +2,6 @@ defmodule BrickTest do
   use ExUnit.Case
   import Tetris.Brick
 
-  @shapes Application.get_env(:tetris, :shapes)
-
   test "new brick" do
     brick = new()
     assert brick == %Tetris.Brick{name: :i, location: {40, 0}, rotation: 0, reflection: false}
@@ -16,9 +14,10 @@ defmodule BrickTest do
   end
 
   test "get brick shape" do
+    shapes = all_shapes()
     [:i, :o, :l, :z, :t]
     |> Enum.each(fn name -> 
-      assert (from([name: name]) |> shape) == @shapes[name]
+      assert (from([name: name]) |> shape) == shapes[name]
     end)
   end
 

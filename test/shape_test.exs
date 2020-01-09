@@ -3,28 +3,30 @@ defmodule ShapeTest do
   import Tetris.Shape
   alias Tetris.Brick
 
-  @shapes Application.get_env(:tetris, :shapes)
+  
 
   test "should translate shape" do
+    shapes = Brick.all_shapes()
     actual = 
       Brick.from([name: :t])
       |> Brick.shape
       |> translate({1, 1})
 
     expected = 
-      @shapes[:t]
+      shapes[:t]
       |> Enum.map( fn {x, y} ->  {x + 1, y + 1} end)
 
     assert actual == expected
   end
 
   test "should not translate" do
+    shapes = Brick.all_shapes()
     actual = 
       Brick.from([name: :t])
       |> Brick.shape
       |> translate
 
-    assert actual == @shapes[:t]
+    assert actual == shapes[:t]
   end
 
   test "should mirror flip  and rotate 180 degrees" do
