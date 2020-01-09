@@ -108,16 +108,20 @@ defmodule Tetris.Brick do
   defimpl Inspect, for: Tetris.Brick do
     import Inspect.Algebra
 
+    @spec inspect(Tetris.Brick.t, any) :: binary
+  
     def inspect(brick, _opts) do
       concat([
         Tetris.Brick.to_string(brick),
         "\n",
         "location: ",
-        inspect(brick.location),
-        " refection: ",
-        inspect(brick.reflection),
-        " rotation: ",
-        inspect(brick.rotation)
+        Kernel.inspect(brick.location),
+        "\n",
+        "refection: ",
+        Kernel.inspect(brick.reflection),
+        "\n",
+        "rotation: ",
+        Kernel.inspect(brick.rotation)
       ])
     end
   end
