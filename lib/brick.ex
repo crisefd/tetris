@@ -11,7 +11,13 @@ defmodule Tetris.Brick do
           reflection: boolean
         }
 
-  @shapes Application.get_env(:tetris, :shapes)
+  @shapes [
+    l: [{2, 1}, {2, 2}, {2, 3}, {3, 3}],
+    o: [{2, 2}, {3, 2}, {2, 3}, {3, 3}],
+    i: [{2, 1}, {2, 2}, {2, 3}, {2, 4}],
+    z: [{2, 2}, {2, 3}, {3, 3}, {3, 4}],
+    t: [{2, 1}, {2, 2}, {3, 2}, {2, 3}]
+  ]
 
   defstruct name: :i,
             location: {40, 0},
@@ -44,6 +50,8 @@ defmodule Tetris.Brick do
   @spec shape(t) :: [point]
 
   def shape(%__MODULE__{name: name}), do: @shapes[name]
+
+  def all_shapes(), do: @shapes
 
   @spec to_string(t) :: binary
 
@@ -108,16 +116,20 @@ defmodule Tetris.Brick do
   defimpl Inspect, for: Tetris.Brick do
     import Inspect.Algebra
 
+    @spec inspect(Tetris.Brick.t, any) :: binary
+  
     def inspect(brick, _opts) do
       concat([
         Tetris.Brick.to_string(brick),
         "\n",
         "location: ",
-        inspect(brick.location),
-        " refection: ",
-        inspect(brick.reflection),
-        " rotation: ",
-        inspect(brick.rotation)
+        Kernel.inspect(brick.location),
+        "\n",
+        "refection: ",
+        Kernel.inspect(brick.reflection),
+        "\n",
+        "rotation: ",
+        Kernel.inspect(brick.rotation)
       ])
     end
   end
