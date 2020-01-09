@@ -4,6 +4,7 @@ defmodule Tetris.Shape do
   @type point :: Brick.point()
   @type t :: [point]
   @type degrees :: Brick.degrees()
+  @type color :: Brick.color()
 
   @spec translate(t, point) :: t
 
@@ -108,5 +109,20 @@ defmodule Tetris.Shape do
 
     shape
   end
+
+  @spec with_color(t, color) :: t
+
+  def with_color(shape, color) do
+    shape
+    |> Enum.map( fn point -> add_color(point, color) end)
+  end
+
+  @spec add_color(point, color) :: point
+  
+  defp add_color(point, color)
+
+  defp add_color({_, _, _} = point, _), do: point
+
+  defp add_color({x, y}, color), do: {x, y, color}
 
 end

@@ -1,7 +1,7 @@
 defmodule Tetris.Brick do
   alias Tetris.Shape
-
-  @type point :: {integer, integer}
+  @type color :: :red | :blue | :green | :orange | :grey
+  @type point :: {integer, integer} | {integer, integer, color}
   @type name :: :i | :o | :l | :z | :t
   @type degrees :: 0 | 90 | 180 | 270
   @type t :: %__MODULE__{

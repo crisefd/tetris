@@ -41,6 +41,16 @@ defmodule ShapeTest do
       |> assert_point({1, 1})
   end
 
+  test "adding color to a shape" do
+    color = Brick.all_colors |> Enum.random
+      Brick.new(:random)
+      |> Brick.shape
+      |> with_color(color)
+      |> Enum.each(fn {_, _, c} -> 
+        assert c == color
+      end)
+  end
+
 
   defp assert_point([actual], expected) do
     assert actual == expected
