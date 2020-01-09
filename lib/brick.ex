@@ -21,7 +21,7 @@ defmodule Tetris.Brick do
 
   @names ~w(i o l z t)a
 
-  @colors ~w(blue green orange red yellow)a
+  @colors ~w(red blue green orange grey)a
 
   defstruct name: :i,
             location: {40, 0},
