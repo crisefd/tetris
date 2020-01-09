@@ -114,7 +114,7 @@ defmodule Tetris.Brick do
     def color(%__MODULE__{name: unquote(name)}), do: unquote(col)
   end
 
-  defp prepare(brick) do
+  def prepare(brick) do
     brick
     |> shape
     |> Shape.rotate(brick.rotation)
