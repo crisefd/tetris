@@ -81,10 +81,8 @@ defmodule Tetris.Brick do
 
   defmodule Movements do
     def down({x, y}, step), do: {x, y - step}
-    def up({x, y}, step), do: {x, y + step}
     def left({x, y}, step), do: {x - step, y}
     def right({x, y}, step), do: {x + step, y}
-
     def rotate(degrees, step) do
       case degrees + 90 * step do
         360 -> 0
@@ -95,7 +93,6 @@ defmodule Tetris.Brick do
 
   for {name, operation, field} <- [
         {:down, &Movements.down/2, :location},
-        {:up, &Movements.up/2, :location},
         {:left, &Movements.left/2, :location},
         {:right, &Movements.right/2, :location},
         {:rotate, &Movements.rotate/2, :rotation}
@@ -113,6 +110,8 @@ defmodule Tetris.Brick do
 
     def color(%__MODULE__{name: unquote(name)}), do: unquote(col)
   end
+
+  @spec prepare(t) :: [point]
 
   def prepare(brick) do
     brick

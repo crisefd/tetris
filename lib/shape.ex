@@ -11,12 +11,12 @@ defmodule Tetris.Shape do
   @doc """
     Ads {dx, dy} to every point {x, y} in the shape
   """
-  def translate(points, adjustment \\ {0, 0})
+  def translate(shape, adjustment \\ {0, 0})
 
-  def translate(points, {0, 0}), do: points
+  def translate(shape, {0, 0}), do: shape
 
-  def translate(points, {dx, dy}) do
-    Enum.map(points, fn {x, y} ->
+  def translate(shape, {dx, dy}) do
+    Enum.map(shape, fn {x, y} ->
       {x + dx, y + dy}
     end)
   end
