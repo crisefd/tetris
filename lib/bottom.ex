@@ -4,11 +4,11 @@ defmodule Tetris.Bottom do
     @type shape :: Shape.t
     @type bottom :: map
 
-    @spec merge(bottom, shape) :: bottom
-
     @max_width 10
     @min_width 1
     @max_height 20
+
+    @spec merge(bottom, shape) :: bottom
 
     def merge(bottom, shape) do
         shape
@@ -30,14 +30,6 @@ defmodule Tetris.Bottom do
         Enum.any?(points, &collides?(bottom, &1))
     end
 
-    def complete_ys(bottom) do
-        bottom
-        |> Map.keys
-        |> Enum.map(&elem(&1, 1))
-        |> Enum.uniq
-        |> Enum.filter(fn y -> complete?(bottom, y) end)
-    end
-
     @spec complete?(bottom, integer) :: boolean
 
     def complete?(bottom, row) do
@@ -47,11 +39,25 @@ defmodule Tetris.Bottom do
         |> (&(&1 == @max_width)).()
     end
 
-    def bad_keys(bottom, row) do
+    @spec full_collapse(bottom) :: bottom
+
+    def full_collapse(bottom) do
+        bottom
+        |> complete_ys
+        |> Enum.reduce(bottom, &collapse_row(&2, &1))
+    end
+
+    @spec complete_ys(bottom) :: list
+
+    def complete_ys(bottom) do
         bottom
         |> Map.keys
-        |> Enum.filter(fn {_x, y} -> y == row end)
+        |> Enum.map(&elem(&1, 1))
+        |> Enum.uniq
+        |> Enum.filter(fn y -> complete?(bottom, y) end)
     end
+
+    @spec collapse_row(bottom, integer) :: bottom
 
     def collapse_row(bottom, row) do
         bottom
@@ -60,17 +66,21 @@ defmodule Tetris.Bottom do
         |> Map.new
     end
 
-    def move_bad_points_up({{x, y}, {x, y, color}}, row) when y < row do
+    @spec move_bad_points_up(tuple, integer) :: tuple
+
+    defp move_bad_points_up({{x, y}, {x, y, color}}, row) when y < row do
         {{x, y + 1}, {x, y + 1, color}}
     end
 
-    def move_bad_points_up(key_value, _row)  do
+    defp move_bad_points_up(key_value, _row)  do
        key_value 
     end
 
-    def full_collapse(bottom) do
+    @spec bad_keys(bottom, integer) :: list
+
+    defp bad_keys(bottom, row) do
         bottom
-        |> complete_ys
-        |> Enum.reduce(bottom, &collapse_row(&2, &1))
+        |> Map.keys
+        |> Enum.filter(fn {_x, y} -> y == row end)
     end
 end

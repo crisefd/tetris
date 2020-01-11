@@ -9,7 +9,7 @@ defmodule Tetris.Shape do
   @spec traslate(t, point) :: t
 
   @doc """
-    Ads {dx, dy} to every point {x, y} in the shape
+    Adds {dx, dy} to every point {x, y} in the shape
   """
   def traslate(shape, adjustment \\ {0, 0})
 
