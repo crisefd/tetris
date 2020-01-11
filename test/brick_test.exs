@@ -23,10 +23,10 @@ defmodule BrickTest do
 
   test "brick down movement" do
     brick = new() |> down()
-    assert brick.location == {40, -1}
+    assert brick.location == {40, 1}
 
     brick = new() |> down(3)
-    assert brick.location == {40, -3}
+    assert brick.location == {40, 3}
   end
 
   test "brick left movement" do

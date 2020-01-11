@@ -80,7 +80,7 @@ defmodule Tetris.Brick do
   end
 
   defmodule Movements do
-    def down({x, y}, step), do: {x, y - step}
+    def down({x, y}, step), do: {x, y + step}
     def left({x, y}, step), do: {x - step, y}
     def right({x, y}, step), do: {x + step, y}
     def rotate(degrees, step) do
