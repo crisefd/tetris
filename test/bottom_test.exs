@@ -19,7 +19,6 @@ defmodule BottomTest do
 
     test "simple merge", state do
         bottom = state[:bottom]
-        bottom = %{{1, 1} => {1, 1, :blue}}
         actual = merge bottom, [{1, 2, :red}, {1, 3, :red}]
         expected = %{
             {1, 1} => {1, 1, :blue},

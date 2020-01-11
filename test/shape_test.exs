@@ -3,14 +3,12 @@ defmodule ShapeTest do
   import Tetris.Shape
   alias Tetris.Brick
 
-  
-
-  test "should translate shape" do
+  test "should traslate shape" do
     shapes = Brick.all_shapes()
     actual = 
       Brick.from([name: :t])
       |> Brick.shape
-      |> translate({1, 1})
+      |> traslate({1, 1})
 
     expected = 
       shapes[:t]
@@ -19,12 +17,12 @@ defmodule ShapeTest do
     assert actual == expected
   end
 
-  test "should not translate" do
+  test "should not traslate" do
     shapes = Brick.all_shapes()
     actual = 
       Brick.from([name: :t])
       |> Brick.shape
-      |> translate
+      |> traslate
 
     assert actual == shapes[:t]
   end

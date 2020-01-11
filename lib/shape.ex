@@ -6,16 +6,16 @@ defmodule Tetris.Shape do
   @type degrees :: Brick.degrees()
   @type color :: Brick.color()
 
-  @spec translate(t, point) :: t
+  @spec traslate(t, point) :: t
 
   @doc """
     Ads {dx, dy} to every point {x, y} in the shape
   """
-  def translate(shape, adjustment \\ {0, 0})
+  def traslate(shape, adjustment \\ {0, 0})
 
-  def translate(shape, {0, 0}), do: shape
+  def traslate(shape, {0, 0}), do: shape
 
-  def translate(shape, {dx, dy}) do
+  def traslate(shape, {dx, dy}) do
     Enum.map(shape, fn {x, y} ->
       {x + dx, y + dy}
     end)
