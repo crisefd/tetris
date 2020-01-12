@@ -37,7 +37,7 @@ defmodule Tetris.Brick do
   def new(:random) do
     %__MODULE__{
       name: @names |> Enum.random(),
-      location: {40, 0},
+      location: {3, -3},
       rotation: [0, 90, 180, 270] |> Enum.random(),
       reflection: [true, false] |> Enum.random()
     }
