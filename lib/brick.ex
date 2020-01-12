@@ -23,8 +23,10 @@ defmodule Tetris.Brick do
 
   @colors ~w(red blue green orange grey)a
 
+  @initial_location {3, -3}
+
   defstruct name: :i,
-            location: {40, 0},
+            location: @initial_location,
             rotation: 0,
             reflection: false
 
@@ -37,7 +39,7 @@ defmodule Tetris.Brick do
   def new(:random) do
     %__MODULE__{
       name: @names |> Enum.random(),
-      location: {3, -3},
+      location: @initial_location,
       rotation: [0, 90, 180, 270] |> Enum.random(),
       reflection: [true, false] |> Enum.random()
     }
@@ -60,6 +62,8 @@ defmodule Tetris.Brick do
   def all_names, do: @names
 
   def all_colors, do: @colors
+
+  def initial_location, do: @initial_location
 
   @spec to_string(t) :: binary
 

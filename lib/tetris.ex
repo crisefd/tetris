@@ -22,9 +22,6 @@ defmodule Tetris do
     |> drop_helper(bottom, brick, new_brick, color)
   end
 
-
-
-
   for {name, fun} <-
         [try_left: &Brick.left/1,
          try_right: &Brick.right/1, 
