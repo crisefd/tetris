@@ -70,7 +70,10 @@ defmodule Tetris do
     %{brick: new_brick, bottom: bottom, score: 1, game_over: false}
   end
 
+  @spec score(integer) :: integer
+
   defp score(0), do: 0
+
   defp score(count), do: 100 * round(:math.pow(2, count))
 
 end

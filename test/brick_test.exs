@@ -15,7 +15,7 @@ defmodule BrickTest do
 
   test "get brick shape" do
     shapes = all_shapes()
-    [:i, :o, :l, :z, :t]
+    all_names()
     |> Enum.each(fn name -> 
       assert (from([name: name]) |> shape) == shapes[name]
     end)

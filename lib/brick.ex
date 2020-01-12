@@ -131,6 +131,7 @@ defmodule Tetris.Brick do
   
     def inspect(brick, _opts) do
       concat([
+        "\n",
         Tetris.Brick.to_string(brick),
         "\n",
         "location: ",
