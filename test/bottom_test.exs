@@ -41,6 +41,17 @@ defmodule BottomTest do
         assert Enum.count(actual) == 1
     end
 
+    test "full collapse with single row" do
+        b = new_bottom(20, [{{19, 19}, {19, 19, :red}}])
+        {actual_count, actual_bottom} = full_collapse(b)
+        assert actual_count == 1
+        assert {19, 20} in Map.keys(actual_bottom)
+    end
+
+    test "full collapse" do
+        
+    end
+
     def new_bottom(completed_row, extras) do
        extras ++
         (1..10

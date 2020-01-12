@@ -51,6 +51,7 @@ defmodule Tetris do
   defp drop_helper(collided?, bottom, brick, new_brick, color)
 
   defp drop_helper(true, bottom, brick, _new_brick, color) do
+    new_brick = Brick.new :random
     shape =
       brick
       |> prepare
@@ -61,14 +62,15 @@ defmodule Tetris do
       |> Bottom.merge(shape)
       |> Bottom.full_collapse
     %{
-      brick: Brick.new(:random), 
+      brick: new_brick, 
       bottom: new_bottom, 
-      score: score(count)
+      score: score(count),
+      game_over: Bottom.collides?(new_bottom, prepare(new_brick))
     }
   end
 
   defp drop_helper(false, bottom, _brick, new_brick, _color) do
-    %{brick: new_brick, bottom: bottom, score: 1}
+    %{brick: new_brick, bottom: bottom, score: 1, game_over: false}
   end
 
   defp score(0), do: 0
