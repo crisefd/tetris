@@ -39,12 +39,16 @@ defmodule Tetris.Bottom do
         |> (&(&1 == @max_width)).()
     end
 
-    @spec full_collapse(bottom) :: bottom
+    @spec full_collapse(bottom) :: {integer, bottom}
 
     def full_collapse(bottom) do
-        bottom
-        |> complete_ys
-        |> Enum.reduce(bottom, &collapse_row(&2, &1))
+        rows = 
+            bottom 
+            |> complete_ys 
+            |> Enum.sort
+        new_bottom =
+            Enum.reduce(rows, bottom, &collapse_row(&2, &1))
+       {Enum.count(rows), new_bottom}
     end
 
     @spec complete_ys(bottom) :: list
