@@ -13,13 +13,13 @@ defmodule Tetris do
     |> Shape.traslate(brick.location)
   end
 
-  @spec drop(brick, bottom, color) :: map
+  @spec drop(brick, brick, bottom, color) :: map
 
-  def drop(brick, bottom, color) do
+  def drop(brick, next_brick, bottom, color) do
     new_brick = Brick.down(brick)
     bottom
     |> Bottom.collides?(prepare(new_brick))
-    |> drop_helper(bottom, brick, new_brick, color)
+    |> drop_helper(bottom, brick, new_brick, next_brick, color)
   end
 
   for {name, fun} <-
@@ -43,12 +43,13 @@ defmodule Tetris do
     end
   end
 
-  @spec drop_helper(boolean, bottom, brick, brick, color) :: map
+  @spec drop_helper(boolean, bottom, brick, brick, brick, color) :: map
 
-  defp drop_helper(collided?, bottom, brick, new_brick, color)
+  defp drop_helper(collided?, bottom, brick, new_brick, next_brick, color)
 
-  defp drop_helper(true, bottom, brick, _new_brick, color) do
-    new_brick = Brick.new :random
+  defp drop_helper(true, bottom, brick, _new_brick, next_brick, color) do
+    new_next_brick = Brick.new :random
+    dropped_brick = next_brick
     shape =
       brick
       |> prepare
@@ -59,15 +60,16 @@ defmodule Tetris do
       |> Bottom.merge(shape)
       |> Bottom.full_collapse
     %{
-      brick: new_brick,
+      brick: dropped_brick,
+      next_brick: new_next_brick,
       bottom: new_bottom,
       score: score(count),
-      game_over: Bottom.collides?(new_bottom, prepare(new_brick))
+      game_over: Bottom.collides?(new_bottom, prepare(dropped_brick))
     }
   end
 
-  defp drop_helper(false, bottom, _brick, new_brick, _color) do
-    %{brick: new_brick, bottom: bottom, score: 1, game_over: false}
+  defp drop_helper(false, bottom, _brick, new_brick, next_brick, _color) do
+    %{brick: new_brick, next_brick: next_brick , bottom: bottom, score: 1, game_over: false}
   end
 
   @spec score(integer) :: integer

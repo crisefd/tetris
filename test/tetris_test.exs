@@ -23,6 +23,7 @@ defmodule TetrisTest do
 
   test "drops without merging" do
     brick = Brick.from [location: {5, 5}]
+    next_brick = Brick.new
     bottom = %{}
     expected =
       %{
@@ -31,30 +32,35 @@ defmodule TetrisTest do
         score: 1,
         game_over: false
       }
-    actual = drop(brick, bottom, :red)
-    assert actual == expected
+    actual = drop(brick, next_brick, bottom, :red)
+    assert actual.brick == expected.brick
+    assert actual.bottom == expected.bottom
+    assert actual.score == expected.score
+    assert actual.game_over == expected.game_over
   end
 
   test "drops and merges" do
     brick = Brick.from [location: {5, 16}]
+    next_brick = Brick.new
     bottom = %{}
     %{score: score,
-      bottom: new_bottom} = drop(brick, bottom, :red)
+      bottom: new_bottom} = drop(brick, next_brick, bottom, :red)
     assert Map.get(new_bottom, {7, 20}) == {7, 20, :red}
     assert score == 0
-   
+
   end
 
   test "drops to bottom and compresses" do
     brick = Brick.from [location: {5, 16}]
-    bottom = 
+    next_brick = Brick.new
+    bottom =
       for x <- 1..10, y <- 17..20, x != 7 do
         {{x, y}, {x, y, :red}}
       end
       |> Map.new
 
    %{score: score,
-     bottom: new_buttom} = drop(brick, bottom, :red)
+     bottom: new_buttom} = drop(brick, next_brick, bottom, :red)
 
     assert new_buttom == %{}
     assert score == 1600
