@@ -24,7 +24,7 @@ defmodule Tetris do
 
   for {name, fun} <-
         [try_left: &Brick.left/1,
-         try_right: &Brick.right/1, 
+         try_right: &Brick.right/1,
          try_rotate: &Brick.rotate/1] do
 
     @spec unquote(name)(brick, bottom) :: brick
@@ -59,8 +59,8 @@ defmodule Tetris do
       |> Bottom.merge(shape)
       |> Bottom.full_collapse
     %{
-      brick: new_brick, 
-      bottom: new_bottom, 
+      brick: new_brick,
+      bottom: new_bottom,
       score: score(count),
       game_over: Bottom.collides?(new_bottom, prepare(new_brick))
     }

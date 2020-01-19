@@ -9,17 +9,21 @@ defmodule Tetris.Bottom do
     @max_height 20
 
     @spec merge(bottom, shape) :: bottom
-
+    @doc """
+        Takes a shape and merges it into the bottom
+    """
     def merge(bottom, shape) do
         shape
-        |> Enum.map(fn {x, y, color} -> 
-            {{x, y}, {x, y, color}} 
+        |> Enum.map(fn {x, y, color} ->
+            {{x, y}, {x, y, color}}
         end)
         |> Enum.into(bottom)
     end
 
     @spec collides?(bottom, shape | point) :: boolean
-
+    @doc """
+        Detects if a collision has happened
+    """
     def collides?(bottom, {x, y, _}), do: collides?(bottom, {x, y})
 
     def collides?(bottom, {x, y}) do
@@ -31,7 +35,9 @@ defmodule Tetris.Bottom do
     end
 
     @spec complete?(bottom, integer) :: boolean
-
+    @doc """
+        Detects if a given row in the bottom has been completed
+    """
     def complete?(bottom, row) do
         bottom
         |> bad_keys(row)
@@ -40,11 +46,13 @@ defmodule Tetris.Bottom do
     end
 
     @spec full_collapse(bottom) :: {integer, bottom}
-
+    @doc """
+        Collapses the bottom by removing the completed rows
+    """
     def full_collapse(bottom) do
-        rows = 
-            bottom 
-            |> complete_ys 
+        rows =
+            bottom
+            |> complete_ys
             |> Enum.sort
         new_bottom =
             Enum.reduce(rows, bottom, &collapse_row(&2, &1))
@@ -52,7 +60,9 @@ defmodule Tetris.Bottom do
     end
 
     @spec complete_ys(bottom) :: list
-
+    @doc """
+        Returns the completed rows
+    """
     def complete_ys(bottom) do
         bottom
         |> Map.keys
@@ -62,22 +72,24 @@ defmodule Tetris.Bottom do
     end
 
     @spec collapse_row(bottom, integer) :: bottom
-
+    @doc """
+        Collapses the given row in the bottom
+    """
     def collapse_row(bottom, row) do
         bottom
         |> Map.drop(bad_keys(bottom, row))
-        |> Enum.map(&move_bad_points_up(&1, row))
+        |> Enum.map(&move_bad_points(&1, row))
         |> Map.new
     end
 
-    @spec move_bad_points_up(tuple, integer) :: tuple
+    @spec move_bad_points(tuple, integer) :: tuple
 
-    defp move_bad_points_up({{x, y}, {x, y, color}}, row) when y < row do
+    defp move_bad_points({{x, y}, {x, y, color}}, row) when y < row do
         {{x, y + 1}, {x, y + 1, color}}
     end
 
-    defp move_bad_points_up(key_value, _row)  do
-       key_value 
+    defp move_bad_points(key_value, _row)  do
+       key_value
     end
 
     @spec bad_keys(bottom, integer) :: list

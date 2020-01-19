@@ -32,6 +32,9 @@ defmodule Tetris.Brick do
 
   @spec new(:default | :random) :: t
 
+  @doc """
+    Creates a new brick struct with either default or random values
+  """
   def new(kind \\ :default)
 
   def new(:default), do: __struct__()
@@ -46,7 +49,9 @@ defmodule Tetris.Brick do
   end
 
   @spec from(keyword) :: t
-
+  @doc """
+    Creates a new brick struct out of the passed values.
+  """
   def from(opts \\ [])
 
   def from([]), do: new()
@@ -54,19 +59,36 @@ defmodule Tetris.Brick do
   def from(opts), do: __struct__(opts)
 
   @spec shape(t) :: [point]
-
+  @doc """
+    Returns a list of points representing brick's shape
+  """
   def shape(%__MODULE__{name: name}), do: @shapes[name]
 
+  @doc """
+    Returns all available shapes
+  """
   def all_shapes, do: @shapes
 
+  @doc """
+    Returns all available names
+  """
   def all_names, do: @names
 
+  @doc """
+    Returns all available colors
+  """
   def all_colors, do: @colors
 
+  @doc """
+    Returns the initial location of the brick
+  """
   def initial_location, do: @initial_location
 
   @spec to_string(t) :: binary
 
+  @doc """
+    Returns the string representation of the given brick
+  """
   def to_string(brick) do
     brick
     |> prepare
@@ -116,7 +138,9 @@ defmodule Tetris.Brick do
   end
 
   @spec prepare(t) :: [point]
-
+  @doc """
+    Takes a brick, gets its shape, rotates it and mirrors it.
+  """
   def prepare(brick) do
     brick
     |> shape
@@ -128,7 +152,7 @@ defmodule Tetris.Brick do
     import Inspect.Algebra
 
     @spec inspect(Tetris.Brick.t, any) :: binary
-  
+
     def inspect(brick, _opts) do
       concat([
         "\n",

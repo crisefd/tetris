@@ -24,7 +24,7 @@ defmodule Tetris.Shape do
   @spec rotate(t, degrees) :: t
 
   @doc """
-    rotate 90 degrees as per adjustment
+    rotates 90 degrees as per adjustment
   """
   def rotate(shape, 0), do: shape
 
@@ -37,7 +37,7 @@ defmodule Tetris.Shape do
   @spec rotate_90(t) :: t
 
   @doc """
-    transpose |> mirror 
+    transposes and mirrors the given shape
   """
   def rotate_90(shape) do
     shape
@@ -50,7 +50,7 @@ defmodule Tetris.Shape do
   @doc """
       +
       +     --->  + + +
-      + +         +   
+      + +         +
   """
   def transpose(shape) do
     shape |> Enum.map(fn {x, y} -> {y, x} end)
@@ -59,7 +59,7 @@ defmodule Tetris.Shape do
   @doc """
       +            +
       +     --->   +
-      + +        + +    
+      + +        + +
   """
   @spec mirror(t) :: t
 
@@ -85,7 +85,9 @@ defmodule Tetris.Shape do
   end
 
   @spec to_string(t) :: binary
-
+  @doc """
+    Returns string representation of the given shape
+  """
   def to_string(shape) do
     map =
       shape
@@ -111,14 +113,16 @@ defmodule Tetris.Shape do
   end
 
   @spec with_color(t, color) :: t
-
+  @doc """
+    Adds the color to every point in the shape
+  """
   def with_color(shape, color) do
     shape
     |> Enum.map( fn point -> add_color(point, color) end)
   end
 
   @spec add_color(point, color) :: point
-  
+
   defp add_color(point, color)
 
   defp add_color({_, _, _} = point, _), do: point
