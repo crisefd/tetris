@@ -16,7 +16,7 @@ defmodule BrickTest do
   test "get brick shape" do
     shapes = all_shapes()
     all_names()
-    |> Enum.each(fn name -> 
+    |> Enum.each(fn name ->
       assert (from([name: name]) |> shape) == shapes[name]
     end)
   end
@@ -45,11 +45,18 @@ defmodule BrickTest do
     assert brick.location == {43, 0}
   end
 
-  test "brick rotate movement" do
-    assert (from([location: {40, 0}]) |> rotate()).rotation == 90
-    assert (from([location: {40, 0}]) |> rotate(2)).rotation == 180
-    assert (from([location: {40, 0}]) |> rotate(3)).rotation == 270
-    assert (from([location: {40, 0}]) |> rotate(4)).rotation == 0
+  test "brick rotate right movement" do
+    assert (from([location: {40, 0}]) |> rotate_right()).rotation == 90
+    assert (from([location: {40, 0}]) |> rotate_right(2)).rotation == 180
+    assert (from([location: {40, 0}]) |> rotate_right(3)).rotation == 270
+    assert (from([location: {40, 0}]) |> rotate_right(4)).rotation == 0
+  end
+
+  test "brick rotate left movement" do
+    assert (from([location: {40, 0}]) |> rotate_left()).rotation == 270
+    assert (from([location: {40, 0}]) |> rotate_left(2)).rotation == 180
+    assert (from([location: {40, 0}]) |> rotate_left(3)).rotation == 90
+    assert (from([location: {40, 0}]) |> rotate_left(4)).rotation == 0
   end
 
 end

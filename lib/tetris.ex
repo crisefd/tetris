@@ -25,7 +25,8 @@ defmodule Tetris do
   for {name, fun} <-
         [try_left: &Brick.left/1,
          try_right: &Brick.right/1,
-         try_rotate: &Brick.rotate/1] do
+         try_rotate_left: &Brick.rotate_left/1,
+         try_rotate_right: &Brick.rotate_right/1] do
 
     @spec unquote(name)(brick, bottom) :: brick
 

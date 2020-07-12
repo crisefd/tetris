@@ -109,7 +109,13 @@ defmodule Tetris.Brick do
     def down({x, y}, step), do: {x, y + step}
     def left({x, y}, step), do: {x - step, y}
     def right({x, y}, step), do: {x + step, y}
-    def rotate(degrees, step) do
+    def rotate_left(degrees, step) do
+      case (degrees - 90 * step) + 360  do
+        360 -> 0
+        res -> res
+      end
+    end
+    def rotate_right(degrees, step) do
       case degrees + 90 * step do
         360 -> 0
         res -> res
@@ -121,7 +127,8 @@ defmodule Tetris.Brick do
         {:down, &Movements.down/2, :location},
         {:left, &Movements.left/2, :location},
         {:right, &Movements.right/2, :location},
-        {:rotate, &Movements.rotate/2, :rotation}
+        {:rotate_left, &Movements.rotate_left/2, :rotation},
+        {:rotate_right, &Movements.rotate_right/2, :rotation}
       ] do
     @spec unquote(name)(t, integer) :: t
 
