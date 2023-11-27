@@ -5,7 +5,7 @@ defmodule Tetris.MixProject do
     [
       app: :tetris,
       version: "0.1.0",
-      elixir: "~> 1.9",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -21,7 +21,7 @@ defmodule Tetris.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-     {:dialyxir, git: "https://github.com/jeremyjh/dialyxir", only: [:dev], runtime: false},
+     {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
     ]
   end
 end
